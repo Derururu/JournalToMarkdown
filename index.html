@@ -21,16 +21,24 @@
         </header>
 
         <div class="card upload-section">
-            <div class="upload-area" id="dropZone">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" class="icon">
-                    <path d="M12 16L12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M9 11L12 8 15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M8 16H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <h3>Select Export Folder</h3>
-                <p>Choose the folder containing your Apple Journal HTML export</p>
-                <button class="btn-primary" onclick="document.getElementById('folderInput').click()">Browse Folder</button>
-                <input type="file" id="folderInput" webkitdirectory directory multiple style="display: none">
+            <div class="upload-content">
+                <div class="upload-area" id="dropZone">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" class="icon">
+                        <path d="M12 16L12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 11L12 8 15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 16H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3>Import Journal</h3>
+                    <p>Drag & drop your Apple Journal export folder here</p>
+                </div>
+                
+                <div class="action-footer">
+                    <p class="divider-text">or</p>
+                    <button class="btn-primary full-width" onclick="document.getElementById('folderInput').click()">
+                        Browse Folder
+                    </button>
+                    <input type="file" id="folderInput" webkitdirectory directory multiple style="display: none">
+                </div>
             </div>
         </div>
 
@@ -85,12 +93,17 @@
                 Select a date range to begin.
             </div>
 
-            <button class="btn-primary full-width" id="convertBtn" disabled>
-                Export Journal
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-            </button>
+            <div class="action-buttons">
+                <button class="btn-secondary" id="startOverBtn">
+                    Start Over
+                </button>
+                <button class="btn-primary flex-grow" id="convertBtn" disabled>
+                    Export Journal
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <div class="status-overlay hidden" id="statusOverlay">

@@ -60,6 +60,7 @@ header h1 {
     margin-bottom: 8px;
     background: linear-gradient(135deg, var(--text-primary) 30%, #86868b 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -73,33 +74,46 @@ header p {
 .card {
     background: var(--card-bg);
     border-radius: var(--radius);
-    padding: 40px;
+    padding: 0; /* Padding removed for inner structure control */
     box-shadow: var(--shadow-lg);
     border: 1px solid rgba(255,255,255,0.1);
+    overflow: hidden;
+}
+
+.upload-section {
+    padding: 40px;
+}
+
+.filter-section {
+    padding: 40px;
 }
 
 .hidden { display: none !important; }
 
-/* Upload Area */
+/* Upload Area Refined */
+.upload-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
 .upload-area {
     border: 2px dashed var(--border-color);
     border-radius: 16px;
-    padding: 60px 20px;
+    padding: 40px 20px;
     text-align: center;
     cursor: pointer;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(0,0,0,0.01);
 }
 
 .upload-area:hover {
     border-color: var(--primary-color);
     background: rgba(0, 113, 227, 0.02);
-    transform: translateY(-2px);
 }
 
 .upload-area .icon {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     color: var(--primary-color);
     opacity: 0.8;
 }
@@ -107,6 +121,28 @@ header p {
 .upload-area h3 {
     font-size: 20px;
     margin-bottom: 8px;
+}
+
+.action-footer {
+    text-align: center;
+}
+
+.divider-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divider-text::before, .divider-text::after {
+    content: '';
+    height: 1px;
+    background: var(--border-color);
+    flex-grow: 1;
+    margin: 0 16px;
 }
 
 /* Filter Section Refined */
@@ -207,7 +243,7 @@ input[type="date"]:focus {
     border-color: var(--primary-color);
 }
 
-/* Stats Bar */
+/* Stats and Actions */
 .stats-bar {
     background: rgba(0,0,0,0.03);
     padding: 16px;
@@ -217,6 +253,15 @@ input[type="date"]:focus {
     color: var(--text-secondary);
     margin-bottom: 32px;
     font-weight: 500;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+.flex-grow {
+    flex-grow: 1;
 }
 
 /* Buttons */
@@ -246,6 +291,22 @@ input[type="date"]:focus {
     color: rgba(255,255,255,0.8);
 }
 
+.btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background: rgba(0,0,0,0.03);
+}
+
 .full-width { width: 100%; }
 
 /* Status Overlay */
@@ -264,6 +325,8 @@ input[type="date"]:focus {
 
 @media (prefers-color-scheme: dark) {
     .status-overlay { background: rgba(0,0,0,0.7); }
+    .btn-secondary { border-color: rgba(255,255,255,0.2); }
+    .btn-secondary:hover { background: rgba(255,255,255,0.05); }
 }
 
 .spinner {

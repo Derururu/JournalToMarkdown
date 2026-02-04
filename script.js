@@ -74,6 +74,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Convert Button Handler
     convertBtn.addEventListener('click', startConversion);
 
+    // Start Over Button Handler
+    document.getElementById('startOverBtn').addEventListener('click', () => {
+        // Reset State
+        fileMap.clear();
+        entries = [];
+        rootPath = '';
+        
+        // Reset Inputs
+        folderInput.value = '';
+        startDateInput.value = '';
+        endDateInput.value = '';
+        filterStats.textContent = 'Select a date range to begin.';
+        convertBtn.disabled = true;
+        entriesFoundCount.textContent = 'Found 0 entries';
+
+        // Toggle Views
+        filterSection.classList.add('hidden');
+        uploadSection.classList.remove('hidden');
+    });
+
     // Helper: Parse index.html
     async function parseIndexFile(file) {
         const text = await readFileText(file);
