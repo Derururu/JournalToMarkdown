@@ -154,11 +154,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const filteredEntries = updateFilterStats();
         if (!filteredEntries || filteredEntries.length === 0) return;
 
+        // Get Export Format
+        const format = document.querySelector('input[name="exportFormat"]:checked').value; // 'zip' or 'single'
+        
         showStatus('Converting', 'Initializing...', 0);
         
         const zip = new JSZip();
+        let singleFileContent = '';
         let processed = 0;
         let errors = 0;
+        
+        // Sort entries by date ascending for single file
+        filteredEntries.sort((a, b) => a.date - b.date);
 
         for (const entry of filteredEntries) {
             processed++;
@@ -166,16 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateStatus(`Processing ${processed}/${filteredEntries.length}: ${entry.title}`, percent);
 
             try {
-                // Construct file path mapping
-                // entry.href might be "Entries/file.html"
-                // fileMap keys are like "JournalExport/Entries/file.html"
-                
-                // We need to match the partial path
-                // Heuristic: iterate fileMap keys and find suffix match? 
-                // Better: construct the exact expected path if we know the root
-                
-                // NOTE: entry.href is URL encoded usually? user sample showed standard text
-                // Let's try to find the file in the map
+                // Find file in map
                 const targetKey = Array.from(fileMap.keys()).find(k => k.endsWith(entry.href));
                 
                 if (!targetKey) {
@@ -189,12 +187,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 const markdown = parseEntryHtml(htmlContent, entry);
                 
-                // Create filename: YYYY-MM-DD - Title.md
-                const safeTitle = entry.title.replace(/[\/\\:"*?<>|]/g, '_');
-                const dateStr = entry.date.toISOString().split('T')[0];
-                const filename = `${dateStr} - ${safeTitle}.md`;
-                
-                zip.file(filename, markdown);
+                if (format === 'zip') {
+                    // Create filename: YYYY-MM-DD - Title.md
+                    const safeTitle = entry.title.replace(/[\/\\:"*?<>|]/g, '_');
+                    const dateStr = entry.date.toISOString().split('T')[0];
+                    const filename = `${dateStr} - ${safeTitle}.md`;
+                    zip.file(filename, markdown);
+                } else {
+                    // Single File Accumulation
+                    singleFileContent += markdown + '\n\n---\n\n';
+                }
 
             } catch (err) {
                 console.error(`Error processing ${entry.title}`, err);
@@ -202,18 +204,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        updateStatus('Finalizing', 'Generating Zip file...', 100);
+        updateStatus('Finalizing', format === 'zip' ? 'Generating Zip...' : 'Generating Markdown...', 100);
         
-        const blob = await zip.generateAsync({type: "blob"});
-        const downloadUrl = URL.createObjectURL(blob);
+        let downloadUrl, filename;
+
+        if (format === 'zip') {
+            const blob = await zip.generateAsync({type: "blob"});
+            downloadUrl = URL.createObjectURL(blob);
+            filename = `Journal_Export_${new Date().toISOString().split('T')[0]}.zip`;
+        } else {
+            const blob = new Blob([singleFileContent], { type: 'text/markdown' });
+            downloadUrl = URL.createObjectURL(blob);
+            filename = `Journal_Full_Export_${new Date().toISOString().split('T')[0]}.md`;
+        }
         
         const a = document.createElement('a');
         a.href = downloadUrl;
-        a.download = `Journal_Export_${new Date().toISOString().split('T')[0]}.zip`;
+        a.download = filename;
         a.click();
         
         hideStatus();
-        alert(`Conversion complete! ${processed - errors} files converted. ${errors} errors.`);
+        
+        // Small delay to let UI render
+        setTimeout(() => {
+            alert(`Conversion complete! ${processed - errors} entries exported.`);
+        }, 100);
     }
 
     // Helper: Parse Individual Entry HTML

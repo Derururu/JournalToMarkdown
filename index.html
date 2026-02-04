@@ -34,27 +34,62 @@
             </div>
         </div>
 
+        <!-- Redesigned Filter & Options Section -->
         <div class="card filter-section hidden" id="filterSection">
-            <h2>Filter Entries</h2>
-            <p class="subtitle" id="entriesFoundCount">Found 0 entries</p>
+            <div class="card-header">
+                <h2>Configure Export</h2>
+                <p class="subtitle" id="entriesFoundCount">Found 0 entries</p>
+            </div>
             
-            <div class="date-range-picker">
-                <div class="input-group">
-                    <label>Start Date</label>
-                    <input type="date" id="startDate">
+            <div class="options-grid">
+                <!-- Date Filter -->
+                <div class="option-group">
+                    <label class="group-label">Time Range</label>
+                    <div class="date-inputs">
+                        <div class="input-wrapper">
+                            <label>Start</label>
+                            <input type="date" id="startDate">
+                        </div>
+                        <div class="input-wrapper">
+                            <label>End</label>
+                            <input type="date" id="endDate">
+                        </div>
+                    </div>
                 </div>
-                <div class="input-group">
-                    <label>End Date</label>
-                    <input type="date" id="endDate">
+
+                <!-- Export Format -->
+                <div class="option-group">
+                    <label class="group-label">Format</label>
+                    <div class="format-toggles">
+                        <label class="radio-card">
+                            <input type="radio" name="exportFormat" value="zip" checked>
+                            <span class="card-content">
+                                <span class="format-icon">📦</span>
+                                <span class="format-text">Multiple Files</span>
+                                <span class="format-desc">Zip Archive</span>
+                            </span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="exportFormat" value="single">
+                            <span class="card-content">
+                                <span class="format-icon">📄</span>
+                                <span class="format-text">One File</span>
+                                <span class="format-desc">Single Markdown</span>
+                            </span>
+                        </label>
+                    </div>
                 </div>
             </div>
 
-            <div class="stats-preview" id="filterStats">
-                Select a date range to filter your entries.
+            <div class="stats-bar" id="filterStats">
+                Select a date range to begin.
             </div>
 
             <button class="btn-primary full-width" id="convertBtn" disabled>
-                Convert & Download Zip
+                Export Journal
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
             </button>
         </div>
 
