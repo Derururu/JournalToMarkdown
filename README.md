@@ -5,9 +5,10 @@ A secure, client-side web tool to convert your Apple Journal HTML exports into c
 ## Features
 - **Privacy First**: Runs entirely in your browser. No data is ever uploaded to any server.
 - **Bulk Conversion**: Process your entire Journal export in one go.
+- **Multiple Export Formats**: Choose between individual Markdown files (ZIP) or one single consolidated Markdown file.
 - **Date Filtering**: Select a specific date range to export only the entries you need.
 - **Clean Markdown**: Intelligently extracts the content, removing menus and redundant headers.
-- **Zip Download**: Get all your converted files in a single ZIP archive.
+- **Zip/File Download**: Get all your converted files instantly.
 
 ## How to Check Your Journal
 1. Open the Apple Journal app on your iPhone.
