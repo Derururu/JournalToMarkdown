@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Journal to Markdown</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/turndown/7.1.2/turndown.min.js"></script>
+</head>
+<body>
+    <div class="main-container">
+        <header>
+            <h1>Journal Converter</h1>
+            <p>Transform your Apple Journal exports into clean Markdown.</p>
+        </header>
+
+        <div class="card upload-section">
+            <div class="upload-area" id="dropZone">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" class="icon">
+                    <path d="M12 16L12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 11L12 8 15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 16H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h3>Select Export Folder</h3>
+                <p>Choose the folder containing your Apple Journal HTML export</p>
+                <button class="btn-primary" onclick="document.getElementById('folderInput').click()">Browse Folder</button>
+                <input type="file" id="folderInput" webkitdirectory directory multiple style="display: none">
+            </div>
+        </div>
+
+        <div class="card filter-section hidden" id="filterSection">
+            <h2>Filter Entries</h2>
+            <p class="subtitle" id="entriesFoundCount">Found 0 entries</p>
+            
+            <div class="date-range-picker">
+                <div class="input-group">
+                    <label>Start Date</label>
+                    <input type="date" id="startDate">
+                </div>
+                <div class="input-group">
+                    <label>End Date</label>
+                    <input type="date" id="endDate">
+                </div>
+            </div>
+
+            <div class="stats-preview" id="filterStats">
+                Select a date range to filter your entries.
+            </div>
+
+            <button class="btn-primary full-width" id="convertBtn" disabled>
+                Convert & Download Zip
+            </button>
+        </div>
+
+        <div class="status-overlay hidden" id="statusOverlay">
+            <div class="status-card">
+                <div class="spinner"></div>
+                <h3 id="statusTitle">Processing...</h3>
+                <p id="statusMessage">Analyzing files...</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
