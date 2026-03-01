@@ -2,7 +2,7 @@
 
 A secure, client-side web tool to convert your Apple Journal HTML exports into clean, organized Markdown files.
 
-**🚀 Live Demo: [https://journal-to-markdown.vercel.app/](https://journal-to-markdown.vercel.app/)**
+**🚀 Try it out yourself!: [https://journal-to-markdown.vercel.app/](https://journal-to-markdown.vercel.app/)**
 
 
 ## Features
